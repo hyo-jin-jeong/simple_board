@@ -62,17 +62,8 @@ describe('post controller test', () => {
 
       await postService.updatePost(id, content, title);
 
-      expect(db.Post.findById).toBeCalledTimes(1);
-      expect(db.Post.findById).toBeCalledWith(id);
       expect(db.Post.updatePost).toBeCalledTimes(1);
       expect(db.Post.updatePost).toBeCalledWith(id, content, title);
-    });
-    it('return BadRequestError 존재하지 않는 post인 경우', async () => {
-      db.Post.findById = jest.fn();
-
-      expect(async () => {
-        await postService.updatePost(id, content, title);
-      }).rejects.toThrowError(BadRequestException);
     });
   });
 });
