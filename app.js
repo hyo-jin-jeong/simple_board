@@ -3,6 +3,7 @@ import 'express-async-errors';
 import cors from 'cors';
 import db from './db/database.js';
 import { errorHandler } from './middleware/errorHandler.js';
+import { exceptionHaldler } from './middleware/exceptionHandler.js';
 import express from 'express';
 import morgan from 'morgan';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
@@ -22,9 +23,10 @@ export const startServer = async port => {
   app.use(router);
 
   app.use(notFoundHandler);
+  app.use(exceptionHaldler);
   app.use(errorHandler);
 
-  await db.sequelize.sync({ force: true });
+  await db.sequelize.sync({ force: false });
 
   const server = app.listen(port, () =>
     console.log(`server start PORT:${port}`)

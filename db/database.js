@@ -14,4 +14,9 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
+db.User = User.init(sequelize, DataTypes);
+db.Post = Post.init(sequelize, DataTypes);
+
+Post.associate(db);
+
 export default db;
