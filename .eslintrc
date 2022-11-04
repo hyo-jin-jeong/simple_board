@@ -1,0 +1,21 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "parser": "babel-eslint",
+  "extends": ["plugin:prettier/recommended"],
+  "rules": {
+    "no-var": "warn",
+    "no-multiple-empty-lines": "warn",
+    "no-console": "warn",
+    "dot-notation": "warn",
+    "no-unused-vars": "warn",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ]
+  }
+}
