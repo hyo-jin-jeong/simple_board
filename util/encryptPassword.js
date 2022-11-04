@@ -11,7 +11,6 @@ export const createSalt = () => {
 };
 
 export const createEncryptPassword = async (plainPassword, salt) => {
-  console.log(plainPassword);
   return new Promise(async (resolve, reject) => {
     crypto.pbkdf2(
       plainPassword,

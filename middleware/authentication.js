@@ -12,7 +12,6 @@ const authentication = async (req, res, next) => {
   if (!password) {
     throw new BadRequestException('INVALID VALUE');
   }
-
   const post = await db.Post.findById(postId);
   if (!post) {
     throw new BadRequestException('INVALID VALUE');

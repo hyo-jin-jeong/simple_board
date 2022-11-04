@@ -21,7 +21,8 @@ async function createPost(req, res) {
 }
 
 async function getPosts(req, res) {
-  const { id, createdAt } = req.body.pagination;
+  const id = req.body.pagination?.id;
+  const createdAt = req.body.pagination?.createdAt;
 
   const posts = await postService.getPosts(id, createdAt);
 
