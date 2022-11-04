@@ -33,7 +33,7 @@
   - 비밀번호 입력해야 수정,삭제 가능
 
 ## DB Modeling
-![image](https://user-images.githubusercontent.com/55984573/200014632-3ee832bd-64ea-4fc3-8d0a-bbb700ddbe9f.png)
+![image](https://user-images.githubusercontent.com/55984573/200038377-8954f249-a9ed-4948-aae9-655ab06d2161.png)
 
 >-  보통 게시판의 경우 user가 탈퇴하더라도 글은 남아있는 것으로 알고 있어 user_id 값을 null 허용으로 지정하였습니다.
 >-  외래키 설정은 SET NULL로 되어있습니다.
