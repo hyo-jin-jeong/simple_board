@@ -24,7 +24,7 @@ export const startServer = async port => {
   app.use(notFoundHandler);
   app.use(errorHandler);
 
-  await db.sequelize.sync({ force: true });
+  await db.sequelize.sync({ force: false });
 
   const server = app.listen(port, () =>
     console.log(`server start PORT:${port}`)
