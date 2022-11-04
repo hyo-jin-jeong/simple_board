@@ -44,6 +44,15 @@ class Post extends Model {
       onDelete: 'SET NULL',
     });
   }
+  static async createPost(userId, encryptPassword, salt, title, content) {
+    await this.create({
+      userId,
+      password: encryptPassword,
+      salt,
+      title,
+      content,
+    });
+  }
 }
 
 export default Post;

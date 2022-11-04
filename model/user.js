@@ -24,5 +24,8 @@ class User extends Model {
     );
     return this;
   }
+  static async findById(id) {
+    return await this.findOne({ where: { id } });
+  }
 }
 export default User;
