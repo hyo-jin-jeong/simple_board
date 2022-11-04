@@ -40,8 +40,16 @@ async function updatePost(req, res) {
   res.status(200).json({ message: 'UPDATED SUCCESS' });
 }
 
+async function deletePost(req, res) {
+  const id = req.params.id;
+
+  await postService.deletePost(id);
+  res.status(200).json({ message: 'DELETED SUCCESS' });
+}
+
 export default {
   createPost,
   getPosts,
   updatePost,
+  deletePost,
 };
