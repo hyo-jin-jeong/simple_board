@@ -45,6 +45,7 @@ class Post extends Model {
       onDelete: 'SET NULL',
     });
   }
+
   static async findById(id) {
     return await this.findOne({
       where: { id },
@@ -78,6 +79,9 @@ class Post extends Model {
         },
       }
     );
+  }
+  static async deletePost(id) {
+    await this.destroy({ where: { id } });
   }
 }
 
