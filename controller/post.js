@@ -28,7 +28,20 @@ async function getPosts(req, res) {
   res.status(200).json({ data: posts });
 }
 
+async function updatePost(req, res) {
+  const id = req.params.id;
+  const { title, content } = req.body;
+
+  if (!title || title.length > 20 || !content || content.length > 200) {
+    throw new BadRequestException('INVALID VALUE');
+  }
+  await postService.updatePost(id, title, content);
+
+  res.status(200).json({ message: 'UPDATED SUCCESS' });
+}
+
 export default {
   createPost,
   getPosts,
+  updatePost,
 };
