@@ -21,9 +21,11 @@ class Post extends Model {
         },
         password: {
           type: DataTypes.STRING(200),
+          allowNull: false,
         },
         salt: {
           type: DataTypes.STRING(200),
+          allowNull: false,
         },
       },
       {

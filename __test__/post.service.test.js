@@ -49,7 +49,7 @@ describe('post controller test', () => {
   });
 
   describe('post update test', () => {
-    it('', async () => {
+    it('성공 할 경우', async () => {
       db.Post.findById = jest.fn(() => {
         return {
           id,
