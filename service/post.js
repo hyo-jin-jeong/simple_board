@@ -38,6 +38,7 @@ async function createPost(userId, password, title, content) {
 
   db.Post.createPost(userId, encryptPassword, salt, title, content);
 }
+
 async function getPosts(id, createAt) {
   return await db.Post.getPosts(id, createAt);
 }

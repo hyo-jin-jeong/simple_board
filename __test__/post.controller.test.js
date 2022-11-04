@@ -4,7 +4,7 @@ import postController from '../controller/post.js';
 import postService from '../service/post.js';
 
 describe('post create test', () => {
-  it('return 200 성공 할 경우', async () => {
+  it('return 201 성공 할 경우', async () => {
     const request = httpMock.createRequest({
       url: '/posts',
       method: 'POST',
@@ -22,7 +22,7 @@ describe('post create test', () => {
 
     await postController.createPost(request, response);
 
-    expect(response.statusCode).toBe(200);
+    expect(response.statusCode).toBe(201);
     expect(response._getJSONData().message).toBe('CREATED SUCCESS');
   });
   it('return BadRequestError userId가 없을 경우', async () => {
@@ -126,5 +126,39 @@ describe('post create test', () => {
     expect(async () => {
       await postController.createPost(request, response);
     }).rejects.toThrowError(BadRequestException);
+  });
+});
+
+describe('post list get test', () => {
+  it('return 201 성공 할 경우', async () => {
+    const request = httpMock.createRequest({
+      url: '/posts',
+      method: 'GET',
+      body: {
+        pagination: {
+          id: 23,
+          createdAt: '2022-11-04T08:23:39.000Z',
+        },
+      },
+    });
+    const response = httpMock.createResponse();
+    const posts = [
+      {
+        id: 23,
+        title: '프로젝트 진행중',
+        content:
+          '이번 프로젝트는 게시글 생성, 수정, 삭제 구현을 하는 프로젝트이다.',
+        createAt: '2022-11-04T08:23:39.000Z',
+        updatedAt: '2022-11-04T08:23:39.000Z',
+        userId: 1,
+        userName: 'hyojin',
+      },
+    ];
+    postService.getPosts = jest.fn(async () => {
+      return posts;
+    });
+    await postController.getPosts(request, response);
+    expect(response.statusCode).toBe(200);
+    expect(response._getJSONData().data).toEqual(posts);
   });
 });
