@@ -11,6 +11,8 @@ const config = {
     dialect: process.env.DB,
   },
   port: process.env.PORT || 3000,
+  algorithm: process.env.ALGORITHM,
+  keyStretching: parseInt(process.env.KEY_STRETCHING),
 };
 
 export default config;
