@@ -106,6 +106,8 @@ describe('post create test', () => {
     }).rejects.toThrowError(BadRequestException);
   });
   it('return BadRequestError content.length > 200인 경우', async () => {
+    const content =
+      '이번 프로젝트는 게시글 생성, 수정, 삭제 구현을 하는 프로젝트이다.';
     const request = httpMock.createRequest({
       url: '/posts',
       method: 'POST',
@@ -113,10 +115,7 @@ describe('post create test', () => {
         userId: 1,
         password: 'abcdefg1',
         title: '프로젝트 진행중입니다.',
-        content:
-          '이번 프로젝트는 게시글 생성, 수정, 삭제 구현을 하는 프로젝트이다.'.repeat(
-            10
-          ),
+        content: content.repeat(10),
       },
     });
     const response = httpMock.createResponse();
@@ -160,5 +159,60 @@ describe('post list get test', () => {
     await postController.getPosts(request, response);
     expect(response.statusCode).toBe(200);
     expect(response._getJSONData().data).toEqual(posts);
+  });
+});
+
+describe('post update test', () => {
+  it('return 200 성공 할 경우', async () => {
+    const title = '프로젝트 진행중';
+    const content =
+      '이번 프로젝트는 게시글 생성, 수정, 삭제 구현을 하는 프로젝트이다.';
+    const request = httpMock.createRequest({
+      url: '/posts',
+      method: 'PUT',
+      body: {
+        title,
+        content,
+      },
+    });
+    const response = httpMock.createResponse();
+    postService.updatePost = jest.fn();
+
+    await postController.updatePost(request, response);
+    expect(response.statusCode).toBe(200);
+    expect(response._getJSONData().message).toBe('UPDATED SUCCESS');
+  });
+  it('return 400 title.length > 20인 경우', async () => {
+    const request = httpMock.createRequest({
+      url: '/posts',
+      method: 'PUT',
+      body: {
+        title: '프로젝트 진행중입니다...............',
+        content:
+          '이번 프로젝트는 게시글 생성, 수정, 삭제 구현을 하는 프로젝트이다.',
+      },
+    });
+    const response = httpMock.createResponse();
+
+    expect(async () => {
+      await postController.updatePost(request, response);
+    }).rejects.toThrowError(BadRequestException);
+  });
+  it('return 400 content.length > 200인 경우', async () => {
+    const content =
+      '이번 프로젝트는 게시글 생성, 수정, 삭제 구현을 하는 프로젝트이다.';
+    const request = httpMock.createRequest({
+      url: '/posts',
+      method: 'PUT',
+      body: {
+        title: '프로젝트 진행중입니다.',
+        content: content.repeat(10),
+      },
+    });
+    const response = httpMock.createResponse();
+
+    expect(async () => {
+      await postController.updatePost(request, response);
+    }).rejects.toThrowError(BadRequestException);
   });
 });
