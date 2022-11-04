@@ -17,9 +17,18 @@ async function createPost(req, res) {
   }
   await postService.createPost(userId, password, title, content);
 
-  res.status(200).json({ message: 'CREATED SUCCESS' });
+  res.status(201).json({ message: 'CREATED SUCCESS' });
+}
+
+async function getPosts(req, res) {
+  const { id, createdAt } = req.body.pagination;
+
+  const posts = await postService.getPosts(id, createdAt);
+
+  res.status(200).json({ data: posts });
 }
 
 export default {
   createPost,
+  getPosts,
 };
