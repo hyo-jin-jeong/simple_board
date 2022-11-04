@@ -11,7 +11,7 @@ async function createPost(userId, password, title, content) {
   const salt = await createSalt();
   const encryptPassword = await createEncryptPassword(password, salt);
 
-  db.Post.createPost(userId, encryptPassword, salt, title, content);
+  await db.Post.createPost(userId, encryptPassword, salt, title, content);
 }
 
 async function getPosts(id, createAt) {
@@ -19,15 +19,16 @@ async function getPosts(id, createAt) {
 }
 
 async function updatePost(id, content, title) {
-  const post = await db.Post.findById(id);
-  if (!post) {
-    throw new BadRequestException('INVALID VALUE');
-  }
-  db.Post.updatePost(id, content, title);
+  await db.Post.updatePost(id, content, title);
+}
+
+async function deletePost(id) {
+  await db.Post.deletePost(id);
 }
 
 export default {
   createPost,
   getPosts,
   updatePost,
+  deletePost,
 };
