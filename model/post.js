@@ -45,8 +45,12 @@ class Post extends Model {
       onDelete: 'SET NULL',
     });
   }
+  static async findById(id) {
+    return await this.findOne({
+      where: { id },
+    });
+  }
   static async createPost(userId, encryptPassword, salt, title, content) {
-    console.log(userId);
     await this.create({
       userId,
       password: encryptPassword,
@@ -61,6 +65,19 @@ class Post extends Model {
       type: db.Sequelize.QueryTypes.SELECT,
       raw: false,
     });
+  }
+  static async updatePost(id, title, content) {
+    await this.update(
+      {
+        title,
+        content,
+      },
+      {
+        where: {
+          id,
+        },
+      }
+    );
   }
 }
 
