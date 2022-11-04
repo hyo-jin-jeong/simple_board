@@ -1,4 +1,5 @@
 import { Model } from 'sequelize';
+import db from '../db/database.js';
 
 class Post extends Model {
   static init(sequelize, DataTypes) {
@@ -37,7 +38,7 @@ class Post extends Model {
 
   static associate(models) {
     this.belongsTo(models.User, {
-      foriegnKey: {
+      foreignKey: {
         name: 'userId',
         allowNull: true,
       },
@@ -45,6 +46,7 @@ class Post extends Model {
     });
   }
   static async createPost(userId, encryptPassword, salt, title, content) {
+    console.log(userId);
     await this.create({
       userId,
       password: encryptPassword,
@@ -53,6 +55,30 @@ class Post extends Model {
       content,
     });
   }
+  static async getPosts(id, createdAt) {
+    const sql = selectSql(id, createdAt);
+    return await db.sequelize.query(sql, {
+      type: db.Sequelize.QueryTypes.SELECT,
+      raw: false,
+    });
+  }
 }
 
+const selectSql = (id, createdAt) => {
+  if (createdAt) {
+    return `
+    SELECT posts.id as id, title, content, created_at as createAt, updated_at as updatedAt, user_id as userId, name as userName
+    FROM posts INNER JOIN users on posts.user_id = users.id
+      WHERE created_at <= '${createdAt}' and posts.id < ${id}
+      ORDER BY created_at DESC, posts.id DESC
+      LIMIT 20
+  `;
+  }
+  return `
+    SELECT posts.id as id, title, content, created_at as createAt, updated_at as updatedAt, user_id as userId, name as userName
+    FROM posts INNER JOIN users on posts.user_id = users.id
+      ORDER BY created_at DESC, posts.id DESC
+      LIMIT 20
+  `;
+};
 export default Post;
