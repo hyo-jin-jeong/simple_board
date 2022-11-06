@@ -74,7 +74,7 @@
 - pagination 기능은 글 중복 방지를 위해 cursor 방식을 사용하였고 최신글 부터 정렬해야하기 때문에 createdAt, id를 cursor로 설정하였습니다.
 
 ### 테스트 코드
-- 테스트 코드는 unit test를 구현하였고 분기가 있는 로직 위주로 작성하였습니다.
+- unit test를 구현하였고 분기가 있는 로직 위주로 작성하였습니다.
 
 ![image](https://user-images.githubusercontent.com/55984573/200032707-246f7095-4991-469f-8bed-faf06e232935.png)
 
